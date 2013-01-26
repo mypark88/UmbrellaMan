@@ -20,7 +20,7 @@ public class Title extends BasicGameState{
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-		// TODO Auto-generated method stub
+		g.drawString("CHERRY!!!", 50, 50);
 		
 	}
 
