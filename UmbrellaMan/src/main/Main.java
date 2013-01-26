@@ -1,5 +1,6 @@
 package main;
 
+import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
@@ -27,7 +28,13 @@ public class Main extends StateBasedGame{
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
+		try{
+			AppGameContainer appgc = new AppGameContainer(new Main(GAMENAME));
+			appgc.setDisplayMode(256, 244, false);
+			appgc.start();
+		}catch(SlickException e){
+			e.printStackTrace();
+		}
 	}
 
 
