@@ -89,15 +89,14 @@ public class Game extends BasicGameState{
 		for(int i = 0;i<drops.size();i++)
 		{
 			WaterDrop drop = drops.get(i);
-			if(drop.getState()>=60||hitUmbrella())
+			if(drop.getState()>=60||hitUmbrella(drop.getPosX(),drop.getPosY()))
 				drops.remove(drop);
 		}
 		for(WaterDrop drop : drops)
 			drop.fall();
 	}
 
-	private boolean hitUmbrella() {
-		
+	private boolean hitUmbrella(float x, float y) {
 		return false;
 	}
 
