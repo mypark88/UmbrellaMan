@@ -30,7 +30,7 @@ public class Game extends BasicGameState{
 	//Game pieces
 	Girl girl;
 	Boy boy;
-	WaterDrop[] drops;
+	List<WaterDrop> drops;
 	int dropCount = 0;
 	int oldestDrop = 0;
 	
@@ -51,7 +51,7 @@ public class Game extends BasicGameState{
 		
 		boy = new Boy();
 		girl = new Girl();
-		drops = new WaterDrop[64];
+		drops = new ArrayList<WaterDrop>();
 		
 		boy.initAnimation(sheetBoy);
 		girl.initAnimation(sheetGirl);
@@ -79,20 +79,26 @@ public class Game extends BasicGameState{
 		updateInput(gc);
 		updateDrops();
 
-		if(currentFrame==25)
-			generatorDrop();
+		if(currentFrame%30==0)
+			generateDrop();
 		
 	}
 
 	private void updateDrops() {
-
+		for(int i = 0;i<drops.size();i++)
+		{
+			WaterDrop drop = drops.get(i);
+			if(drop.getState()>=60)
+				drops.remove(drop);
+		}
+		for(WaterDrop drop : drops)
+			drop.fall();
 	}
 
-	private void generatorDrop() throws SlickException {
+	private void generateDrop() throws SlickException {
 		int xPosition = randomGenerator.nextInt(206);
 		xPosition+=32;
-		
-
+		drops.add(new WaterDrop(xPosition));
 	}
 
 	private void updateInput(GameContainer gc) {
