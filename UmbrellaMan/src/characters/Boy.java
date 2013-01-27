@@ -21,20 +21,28 @@ public class Boy {
 			return this.posY;
 		}
 		
+		public Animation getLeft(){
+			return this.left;
+		}
+		
+		public Animation getRight(){
+			return this.right;
+		}
+		
 		public void initAnimation(SpriteSheet sheet){
 			left = new Animation();
 			left.addFrame(sheet.getSprite(0, 1), 200);
 			left.addFrame(sheet.getSprite(0, 0), 200);
 			left.addFrame(sheet.getSprite(0, 1), 200);
 			left.addFrame(sheet.getSprite(0, 2), 200);
-			left.setAutoUpdate(false);
+			
 			
 			right = new Animation();
 			right.addFrame(sheet.getSprite(1, 1), 200);
 			right.addFrame(sheet.getSprite(1, 0), 200);
 			right.addFrame(sheet.getSprite(1, 1), 200);
 			right.addFrame(sheet.getSprite(1, 2), 200);
-			right.setAutoUpdate(false);
+
 		}
 
 		public Animation getAnimation() {

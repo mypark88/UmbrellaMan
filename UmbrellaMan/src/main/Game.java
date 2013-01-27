@@ -55,11 +55,15 @@ public class Game extends BasicGameState{
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		currentFrame++;
 		Input input = gc.getInput();
+		
 		if(input.isKeyDown(Input.KEY_LEFT)){
-			boy.move(-1);
+			boy.move(-3);
+			boy.getLeft().start();
+			
 		}else if(input.isKeyDown(Input.KEY_RIGHT)){
-			boy.move(1);
-		} 
+			boy.move(3);
+			boy.getRight().start();
+		}
 		
 	}
 
