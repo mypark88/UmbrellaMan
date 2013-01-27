@@ -1,5 +1,7 @@
 package characters;
 
 public class Girl extends Boy{
-	int posY = 160;
+	public Girl(){
+		this.posY = 168;
+	}
 }

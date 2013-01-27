@@ -1,7 +1,9 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
@@ -22,16 +24,19 @@ public class Game extends BasicGameState{
 	Image background;
 	Image rainDrop;
 	SpriteSheet sheetBoy;
+	SpriteSheet sheetGirl;
 	Animation leftBoy, rightBoy;
 
 	//Game pieces
 	Girl girl;
 	Boy boy;
-	List<WaterDrop> drops;
+	WaterDrop[] drops;
+	int dropCount = 0;
+	int oldestDrop = 0;
 	
 	//Other game stuff
 	long currentFrame;
-
+	Random randomGenerator;
 	
 	
 	public Game(int state){
@@ -42,15 +47,16 @@ public class Game extends BasicGameState{
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		background = new Image("res/img/background-sprite.png");
 		sheetBoy = new SpriteSheet("res/img/spritesheetboy.png", 32, 64);
+		sheetGirl = new SpriteSheet("res/img/spritesheetgirl.png", 16, 48);
 		
 		boy = new Boy();
 		girl = new Girl();
-		drops = new ArrayList<WaterDrop>();
+		drops = new WaterDrop[64];
 		
 		boy.initAnimation(sheetBoy);
+		girl.initAnimation(sheetGirl);
+		randomGenerator = new Random();
 
-		
-		
 	}
 
 	@Override
@@ -58,6 +64,7 @@ public class Game extends BasicGameState{
 		g.scale((float)2.5, (float)2.5);
 		g.drawImage(background, 0,0);
 		g.drawAnimation(boy.getAnimation(), boy.getPosX(), boy.getPosY());
+		g.drawAnimation(girl.getAnimation(), girl.getPosX(), girl.getPosY());
 		
 		for(WaterDrop drop: drops)
 		{
@@ -70,8 +77,22 @@ public class Game extends BasicGameState{
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		currentFrame++;
 		updateInput(gc);
+		updateDrops();
+
+		if(currentFrame==25)
+			generatorDrop();
 		
+	}
+
+	private void updateDrops() {
+
+	}
+
+	private void generatorDrop() throws SlickException {
+		int xPosition = randomGenerator.nextInt(206);
+		xPosition+=32;
 		
+
 	}
 
 	private void updateInput(GameContainer gc) {

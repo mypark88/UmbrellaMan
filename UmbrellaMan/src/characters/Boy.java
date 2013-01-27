@@ -5,8 +5,8 @@ import org.newdawn.slick.SpriteSheet;
 
 public class Boy {
 
-		private Animation front, left, right;
-		private int posX = 128, posY = 144;
+		protected Animation front, left, right;
+		protected int posX = 128, posY = 144;
 		boolean isFacingLeft = false;
 		
 		public Boy(){
