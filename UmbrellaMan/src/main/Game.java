@@ -34,7 +34,7 @@ public class Game extends BasicGameState{
 		background = new Image("res/img/background-sprite.png");
 		sheet = new SpriteSheet("res/img/spritesheetboy.png", 32, 64);
 		boy = new Boy();
-		
+		girl = new Girl();
 		boy.initAnimation(sheet);
 
 		
