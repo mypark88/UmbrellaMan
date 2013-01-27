@@ -5,9 +5,10 @@ import org.newdawn.slick.SpriteSheet;
 
 public class Boy {
 
-		protected Animation front, left, right;
+		protected Animation gameover, left, right;
 		protected int posX = 128, posY = 144;
-		boolean isFacingLeft = false;
+		boolean isFacingLeft = false, isGameover = false;
+		
 		
 		public Boy(){
 			
@@ -42,11 +43,16 @@ public class Boy {
 			right.addFrame(sheet.getSprite(1, 0), 200);
 			right.addFrame(sheet.getSprite(1, 1), 200);
 			right.addFrame(sheet.getSprite(1, 2), 200);
+			
+			gameover = new Animation();
+			gameover.addFrame(sheet.getSprite(1, 3), 200);
 
 		}
 
 		public Animation getAnimation() {
-			if(isFacingLeft)
+			if(isGameover)
+				return gameover;
+			else if(isFacingLeft)
 				return left;
 			else
 				return right;
@@ -55,10 +61,13 @@ public class Boy {
 		public void move(int speed) {
 			if(speed<0)
 				isFacingLeft = true;
-			else
+			else if (speed>0)
 				isFacingLeft = false;
 			
 			this.posX+=speed;
-			
+		}
+		
+		public void setGameover(boolean game){
+			this.isGameover = game;
 		}
 }
