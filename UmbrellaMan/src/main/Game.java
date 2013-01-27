@@ -46,7 +46,6 @@ public class Game extends BasicGameState{
 	long currentFrame;
 	Random randomGenerator;
 	boolean gameover = false;
-	int heartCount = 0;
 	int heartsCollected = 0;
 
 
@@ -93,7 +92,7 @@ public class Game extends BasicGameState{
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		g.scale((float)2.5, (float)2.5);
 		g.drawImage(background, 0,0);
-		g.drawString("CurrentFrame: "+girl.getSpeed(),10,10);
+		g.drawString("Hearts Collected: "+ heartsCollected,10,10);
 		for(WaterDrop drop: drops)
 		{
 			g.drawImage(drop.getImg(), drop.getPosX(), drop.getPosY());
@@ -111,6 +110,7 @@ public class Game extends BasicGameState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		currentFrame++;
+		increaseSpeed();
 		if(currentFrame==1)
 			music.loop(1, (float) 0.25);
 		if(gameover)
@@ -130,7 +130,6 @@ public class Game extends BasicGameState{
 		updateInput(gc);
 		updateDrops();
 		girl.move();
-		isHeartCollected();
 
 		if(currentFrame%30==0)
 		{
@@ -138,9 +137,8 @@ public class Game extends BasicGameState{
 			changeGirlSpeed(9);
 		}
 
-		if(currentFrame%100==0){
-			renderHearts.add(listOfHearts.get(heartCount));
-			heartCount++;
+		if(currentFrame%900==0){
+			renderHearts.add(listOfHearts.get(listOfHearts.size()-1));
 		}
 	}
 
@@ -205,15 +203,14 @@ public class Game extends BasicGameState{
 
 	private void updateInput(GameContainer gc) {
 		Input input = gc.getInput();
-		if(input.isKeyDown(Input.KEY_LEFT)){
+		if(input.isKeyDown(Input.KEY_LEFT) && boy.getPosX() > 0){
 			boy.move(-boy.getSpeed());
 			boy.getLeft().start();
 
-		}else if(input.isKeyDown(Input.KEY_RIGHT)){
+		}else if(input.isKeyDown(Input.KEY_RIGHT) && boy.getPosX() < 224){
 			boy.move(boy.getSpeed());
 			boy.getRight().start();
 		}
-		recycleHearts(gc);
 	}
 
 	@Override
@@ -228,7 +225,7 @@ public class Game extends BasicGameState{
 				int boyX = boy.getPosX();
 				System.out.println("heartX: "+ heartX);
 				System.out.println("BoyX: "+ boyX );
-				if((heartX< boyX && heartX > boyX) || (heartX+10 >boyX && heartX <boyX)){
+				if(heartX == boyX+16){
 					System.out.println("Heart is same pos as boy");
 					renderHearts.remove(heart);
 					heartsCollected++;
@@ -241,19 +238,21 @@ public class Game extends BasicGameState{
 
 
 	public void increaseSpeed(){
+		if(isHeartCollected()){
 		int speed = boy.getSpeed();
 		speed = speed * 2;
 		boy.setSpeed(speed);	
-	}
-
-	public void recycleHearts(GameContainer gc){
-		Input input = gc.getInput();
-		if(heartsCollected > 3){
-			if(boy.getPosX() < 16 && input.isKeyPressed(Input.KEY_SPACE)){
-				heartsCollected = 0;
-				increaseSpeed();
-			}
 		}
 	}
+
+//	public void recycleHearts(GameContainer gc){
+//		Input input = gc.getInput();
+//		if(heartsCollected > 3){
+//			if(boy.getPosX() < 16 && input.isKeyPressed(Input.KEY_SPACE)){
+//				heartsCollected = 0;
+//				increaseSpeed();
+//			}
+//		}
+	//}
 
 }
