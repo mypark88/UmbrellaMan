@@ -1,5 +1,8 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -12,17 +15,23 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import characters.Boy;
 import characters.Girl;
+import characters.WaterDrop;
 
 public class Game extends BasicGameState{
-	
-	Image girlImg;
+	//Images
 	Image background;
+	Image rainDrop;
+	SpriteSheet sheetBoy;
+	Animation leftBoy, rightBoy;
+
+	//Game pieces
 	Girl girl;
 	Boy boy;
-	long currentFrame;
-	SpriteSheet sheet;
+	List<WaterDrop> drops;
 	
-	Animation left, right;
+	//Other game stuff
+	long currentFrame;
+
 	
 	
 	public Game(int state){
@@ -32,10 +41,13 @@ public class Game extends BasicGameState{
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		background = new Image("res/img/background-sprite.png");
-		sheet = new SpriteSheet("res/img/spritesheetboy.png", 32, 64);
+		sheetBoy = new SpriteSheet("res/img/spritesheetboy.png", 32, 64);
+		
 		boy = new Boy();
 		girl = new Girl();
-		boy.initAnimation(sheet);
+		drops = new ArrayList<WaterDrop>();
+		
+		boy.initAnimation(sheetBoy);
 
 		
 		
@@ -47,15 +59,23 @@ public class Game extends BasicGameState{
 		g.drawImage(background, 0,0);
 		g.drawAnimation(boy.getAnimation(), boy.getPosX(), boy.getPosY());
 		
-	
-		
+		for(WaterDrop drop: drops)
+		{
+			g.drawImage(drop.getImg(), drop.getPosX(), drop.getPosY());
+		}
+
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		currentFrame++;
-		Input input = gc.getInput();
+		updateInput(gc);
 		
+		
+	}
+
+	private void updateInput(GameContainer gc) {
+		Input input = gc.getInput();
 		if(input.isKeyDown(Input.KEY_LEFT)){
 			boy.move(-3);
 			boy.getLeft().start();
@@ -64,7 +84,6 @@ public class Game extends BasicGameState{
 			boy.move(3);
 			boy.getRight().start();
 		}
-		
 	}
 
 	@Override
