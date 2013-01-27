@@ -37,6 +37,7 @@ public class Game extends BasicGameState{
 	//Other game stuff
 	long currentFrame;
 	Random randomGenerator;
+	boolean gameOver = false;
 	
 	
 	public Game(int state){
@@ -88,11 +89,16 @@ public class Game extends BasicGameState{
 		for(int i = 0;i<drops.size();i++)
 		{
 			WaterDrop drop = drops.get(i);
-			if(drop.getState()>=60)
+			if(drop.getState()>=60||hitUmbrella())
 				drops.remove(drop);
 		}
 		for(WaterDrop drop : drops)
 			drop.fall();
+	}
+
+	private boolean hitUmbrella() {
+		
+		return false;
 	}
 
 	private void generateDrop() throws SlickException {
