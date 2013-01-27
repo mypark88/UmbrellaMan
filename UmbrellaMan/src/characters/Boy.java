@@ -9,6 +9,7 @@ public class Boy {
 		protected int posX = 128, posY = 144;
 		boolean isFacingLeft = false, isGameover = false;
 		
+		int speed = 1;
 		
 		public Boy(){
 			
@@ -67,7 +68,16 @@ public class Boy {
 			this.posX+=speed;
 		}
 		
-		public void setGameover(boolean game){
-			this.isGameover = game;
+		
+		public int getSpeed(){
+			return speed;
+		}
+		
+		public void setSpeed(int s){
+			speed = s;
+		}
+
+		public void setGameover(boolean b) {
+			this.isGameover = b;
 		}
 }
